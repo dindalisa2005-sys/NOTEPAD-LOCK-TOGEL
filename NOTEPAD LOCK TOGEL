@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>NOTEPAD LOCK TOGEL</title>
+    <style>
+        body{
+            background:#000;
+            color:white;
+            font-family:Arial;
+        }
+
+        .box{
+            border:1px solid #333;
+            padding:15px;
+            margin:10px;
+            border-radius:15px;
+            background:#111;
+        }
+
+        button{
+            background:#2196f3;
+            color:white;
+            border:none;
+            padding:8px 15px;
+            border-radius:10px;
+            cursor:pointer;
+        }
+    </style>
+</head>
+<body>
+
+<h1>NOTEPAD LOCK TOGEL</h1>
+
+<div class="box">
+    Saat ini QRIS sedikit delay ya bosku
+    <button onclick="copyText(this)">COPY</button>
+</div>
+
+<script>
+function copyText(btn){
+    let text = btn.parentElement.innerText.replace('COPY','');
+    navigator.clipboard.writeText(text);
+    alert('Berhasil dicopy');
+}
+</script>
+
+</body>
+</html>
