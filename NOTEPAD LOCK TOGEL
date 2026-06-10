@@ -3,267 +3,258 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NOTEPAD LOCK TOGEL MAS ROY</title>
+<title>Notepad Cyber Lock</title>
+
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
 
 <style>
+:root{
+    --bg:#0f172a;
+    --box:#050505;
+    --text:white;
+    --btn:#2563eb;
+}
+
+/* LIGHT MODE */
+.light{
+    --bg:#f1f5f9;
+    --box:white;
+    --text:black;
+    --btn:#0ea5e9;
+}
+
 body{
     margin:0;
-    font-family:Arial, sans-serif;
-    color:white;
+    font-family:Arial;
+    background:var(--bg);
+    color:var(--text);
+    overflow:hidden;
+}
 
+/* CYBER BACKGROUND */
+.grid{
+    position:fixed;
+    inset:0;
+    background-image:
+        linear-gradient(rgba(0,255,255,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,255,255,0.05) 1px, transparent 1px);
+    background-size:50px 50px;
+    z-index:-3;
+}
+
+.cyber-bg{
+    position:fixed;
+    inset:0;
     background:
-    radial-gradient(circle at top left,#2563eb 0%,transparent 30%),
-    radial-gradient(circle at bottom right,#06b6d4 0%,transparent 30%),
-    linear-gradient(135deg,#020617,#0f172a,#020617);
-
-    min-height:100vh;
+        radial-gradient(circle at 20% 20%, rgba(0,255,255,0.15), transparent 40%),
+        radial-gradient(circle at 80% 70%, rgba(0,255,128,0.12), transparent 40%),
+        linear-gradient(135deg,#020617,#000);
+    z-index:-2;
 }
 
-/* FIX ANIMATION */
-@keyframes glow{
-    from{
-        box-shadow:
-        0 0 10px #2563eb,
-        0 0 20px #2563eb;
-    }
-    to{
-        box-shadow:
-        0 0 25px #3b82f6,
-        0 0 50px #3b82f6;
-    }
+.scanline{
+    position:fixed;
+    top:-40%;
+    width:100%;
+    height:40%;
+    background:linear-gradient(to bottom,
+        transparent,
+        rgba(0,255,255,0.2),
+        transparent);
+    animation:scan 4s linear infinite;
+    z-index:-1;
 }
 
+@keyframes scan{
+    0%{top:-40%}
+    100%{top:120%}
+}
+
+/* LOCK SCREEN */
+#lockScreen{
+    position:fixed;
+    inset:0;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    background:#000;
+    z-index:9999;
+}
+
+/* HEADER */
 .header{
     text-align:center;
-    padding:20px;
+    padding:15px;
 }
 
 .logo{
+    padding:12px 25px;
+    border:1px solid #3b82f6;
     display:inline-block;
-    padding:18px 35px;
-
-    background:rgba(15,23,42,.8);
-    border:2px solid #3b82f6;
-    border-radius:25px;
-
-    font-size:28px;
-    font-weight:bold;
-    color:white;
-
-    animation:glow 2s infinite alternate;
-}
-
-<div style="text-align:center; margin-bottom:10px;">
-    <button onclick="addBox()" 
-    style="
-        padding:10px 20px;
-        border:none;
-        border-radius:10px;
-        background:#22c55e;
-        color:white;
-        font-weight:bold;
-        cursor:pointer;
-    ">
-        ➕ Tambah Box
-    </button>
-</div>
-
-.container{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(350px,1fr));
-    gap:15px;
-    padding:15px;
-}
-
-.column{
-    background:#000;
-    border:2px solid #1e3a8a;
-    border-radius:20px;
-}
-
-.title{
-    background:white;
-    color:black;
-    text-align:center;
-    padding:10px;
-    font-size:22px;
-    font-weight:bold;
-}
-
-.box{
-    margin:12px;
-    padding:15px;
-    padding-bottom:55px;
-    background:#050505;
-    border-radius:18px;
-    position:relative;
-    white-space:pre-line;
-	line-height:1.6;
-}
-
-.copy-btn{
-    position:absolute;
-    right:10px;
-    bottom:10px;
-    border:none;
-    color:white;
-    background:linear-gradient(45deg,#0ea5e9,#2563eb);
-    padding:8px 16px;
     border-radius:12px;
+}
+
+/* CONTROLS */
+.controls{
+    text-align:center;
+}
+
+button{
+    padding:8px 10px;
+    margin:3px;
+    border:none;
+    border-radius:6px;
     cursor:pointer;
 }
 
-.copy-btn:hover{
-    transform: scale(1.05);
-    transition:0.2s;
+.add{background:#22c55e;color:white;}
+.mode{background:#f59e0b;color:white;}
+.set{background:#a855f7;color:white;}
+
+/* BOX */
+.container{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:10px;
+    padding:10px;
+}
+
+.box{
+    background:var(--box);
+    color:var(--text);
+    padding:12px;
+    border-radius:10px;
+    min-height:70px;
+    outline:none;
+    position:relative;
+}
+
+.copy{
+    position:absolute;
+    bottom:5px;
+    right:5px;
+    font-size:12px;
+    background:var(--btn);
+    color:white;
+}
+
+/* SETTINGS */
+#settings{
+    position:fixed;
+    top:10px;
+    right:10px;
+    background:#111;
+    padding:10px;
+    border-radius:10px;
+    display:none;
+    z-index:99999;
 }
 </style>
 </head>
 
 <body>
 
+<div class="grid"></div>
+<div class="cyber-bg"></div>
+<div class="scanline"></div>
+
+<!-- LOCK -->
+<div id="lockScreen">
+    <h2>🔐 Password</h2>
+    <input id="pass" type="password">
+    <button onclick="login()">Masuk</button>
+</div>
+
+<!-- SETTINGS -->
+<div id="settings">
+    <h4>⚙ Ganti Password</h4>
+    <input id="newPass" placeholder="password baru">
+    <button onclick="savePass()">Simpan</button>
+</div>
+
+<!-- UI -->
 <div class="header">
-    <div class="logo">📝 NOTEPAD TOGEL ROY ABDU SIREGAR</div>
+    <div class="logo">📝 CYBER NOTEPAD</div>
 </div>
 
-<div class="container" id="container">
-
-    <div class="column">
-        <div class="box" contenteditable="true">LOCK PEMAIN INVEST BARU</div>
-
-        <div class="box" contenteditable="true">
-            
-BERI PERINGATAN BATASAN PASANG TOGEL 2D 
-JIKA KEDAPATAN BETTING LEBIH BATAS 
-HANGUSKAN KEMENANGAN TOGEL DAN HANYA
-BISA BERMAIN SLOT ATAU LIVEGAME SAJA.
-            </span>
-            <button class="copy-btn" onclick="copyText('txt1')">COPY</button>
-        </div>
-
-        <div class="box" contenteditable="true">
-            
-INVEST 2D, BERI PERINGATAN BATASAN PASANG
-TOGEL JIKA KEDAPATAN BETTING LEBIH BATAS 
-HANGUSKAN KEMENANGAN DAN HANYA
-BISA SLOT ATAU LIVEGAME SAJA.
-            </span>
-            <button class="copy-btn" onclick="copyText('txt2')">COPY</button>
-        </div>
-    </div>
-
-    <<div class="box" contenteditable="true">
-        <div class="title">SUDAH DI PERINGATI 1 KALI</div>
-
-        <div class="box" contenteditable="true">
-         
-            KET SEBELUM NYA SUDAH DI PERINGATI BATAS LINE 2D
-TIDAK TERIMA BETTING TOGEL DAN HANYA BISA
-BERMAIN SLOT DAN LIVE GAME SAJA , 
-HANGUSKAN KEMENANGAN
-.
-            </span>
-            <button class="copy-btn" onclick="copyText('txt3')">COPY</button>
-        </div>
-
-        <div class="box" contenteditable="true">
-           
-            INVEST 2D, KET SEBELUMNYA SUDAH PERNAH DI 
-PERINGATI UNTUK BERMAIN TOGEL ,HANGUSKAN
-KEMENANGAN KEMBALIKAN MODAL DEPOSIT
-.
-            </span>
-            <button class="copy-btn" onclick="copyText('txt4')">COPY</button>
-        </div>
-    </div>
-
-    <div class="box" contenteditable="true">
-        <div class="title">PEMAIN INVEST HKB</div>
-
-        <div class="box" contenteditable="true">
-            
-            PEMAIN INVEST PASARAN HKB 
-SUDAH DI LOCK DI WEB LAIN 
-TIDAK TERIMA BETTING TOGEL LAGI
-HANGUSKAN KEMENANGAN .
-            </span>
-            <button class="copy-btn" onclick="copyText('txt5')">COPY</button>
-        </div>
-
-        <div class="box" contenteditable="true">
-           
-            INVEST 2D LAGA DI WEB LAIN, TIDAK TERMAKAN
-JANGKA PANJANG, TIDAK TERIMA BETTING
-TOGEL LAGI DAN HANYA BISA MAIN SLOT ATAU 
-LIVE GAME SAJA.
-
-            </span>
-            <button class="copy-btn" onclick="copyText('txt6')">COPY</button>
-        </div>
-    </div>
-
+<div class="controls">
+    <button class="add" onclick="addBox()">➕ Box</button>
+    <button class="mode" onclick="toggleMode()">🌙 Mode</button>
+    <button class="set" onclick="toggleSettings()">⚙</button>
 </div>
 
+<div class="container" id="container"></div>
+
 <script>
-function copyText(id){
-    const text = document.getElementById(id).innerText;
+let container=document.getElementById("container");
 
-    navigator.clipboard.writeText(text).then(() => {
-        const msg = document.createElement("div");
-        msg.innerText = "✔ Berhasil dicopy";
-
-        msg.style.position = "fixed";
-        msg.style.bottom = "20px";
-        msg.style.left = "50%";
-        msg.style.transform = "translateX(-50%)";
-        msg.style.background = "#2563eb";
-        msg.style.padding = "10px 20px";
-        msg.style.borderRadius = "10px";
-        msg.style.color = "white";
-        msg.style.fontSize = "14px";
-        msg.style.zIndex = "9999";
-
-        document.body.appendChild(msg);
-
-        setTimeout(() => {
-            msg.remove();
-        }, 1500);
-    });
+/* DEFAULT PASSWORD */
+if(!localStorage.getItem("pass")){
+    localStorage.setItem("pass","1234");
 }
+
+/* LOGIN */
+function login(){
+    let p=document.getElementById("pass").value;
+    if(p===localStorage.getItem("pass")){
+        document.getElementById("lockScreen").style.display="none";
+        load();
+    }else{
+        alert("Password salah");
+    }
+}
+
+/* SETTINGS */
+function toggleSettings(){
+    let s=document.getElementById("settings");
+    s.style.display = s.style.display==="block"?"none":"block";
+}
+
+function savePass(){
+    let p=document.getElementById("newPass").value;
+    if(p){
+        localStorage.setItem("pass",p);
+        alert("Password diganti!");
+    }
+}
+
+/* BOX */
+function addBox(text="Tulis..."){
+    let div=document.createElement("div");
+    div.className="box";
+    div.contentEditable=true;
+    div.innerHTML=text+`<button class="copy" onclick="copy(this)">COPY</button>`;
+    container.appendChild(div);
+    save();
+}
+
+/* COPY */
+function copy(btn){
+    navigator.clipboard.writeText(btn.parentElement.innerText.replace("COPY",""));
+}
+
+/* SAVE */
+function save(){
+    localStorage.setItem("data",container.innerHTML);
+}
+
+function load(){
+    container.innerHTML=localStorage.getItem("data")||"";
+}
+
+/* MODE */
+function toggleMode(){
+    document.body.classList.toggle("light");
+}
+
+/* AUTO SAVE */
+document.addEventListener("input",save);
+
+/* DRAG */
+new Sortable(container,{animation:150});
+
 </script>
-<script>
-<script>
-function copyBox(btn){
-    const text = btn.parentElement.innerText.replace("COPY","").trim();
-    navigator.clipboard.writeText(text);
 
-    const msg = document.createElement("div");
-    msg.innerText = "✔ Dicopy";
-    msg.style.position = "fixed";
-    msg.style.bottom = "20px";
-    msg.style.left = "50%";
-    msg.style.transform = "translateX(-50%)";
-    msg.style.background = "#2563eb";
-    msg.style.color = "white";
-    msg.style.padding = "10px 20px";
-    msg.style.borderRadius = "10px";
-
-    document.body.appendChild(msg);
-    setTimeout(()=>msg.remove(),1500);
-}
-
-function addBox(){
-    const container = document.getElementById("container");
-
-    const box = document.createElement("div");
-    box.className = "box";
-    box.contentEditable = true;
-
-    box.innerHTML = `
-        Tulis teks di sini...
-        <button class="copy-btn" onclick="copyBox(this)">COPY</button>
-    `;
-
-    container.appendChild(box);
-}
-</script>
+</body>
+</html>
