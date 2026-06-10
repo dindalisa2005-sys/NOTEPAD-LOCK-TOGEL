@@ -1,14 +1,15 @@
+```html
 <!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NOTEPAD LOCK TOGEL MAS ROY</title>
+<title>NOTEPAD TOGEL ROY</title>
 
 <style>
 body{
     margin:0;
-    font-family:Arial, sans-serif;
+    font-family:Arial,sans-serif;
     color:white;
     background:linear-gradient(135deg,#020617,#0f172a);
     min-height:100vh;
@@ -55,6 +56,7 @@ body{
     position:relative;
     white-space:pre-line;
     line-height:1.6;
+    min-height:120px;
     outline:none;
 }
 
@@ -68,6 +70,10 @@ body{
     padding:6px 12px;
     border-radius:8px;
     cursor:pointer;
+}
+
+.copy-btn:hover{
+    background:#1d4ed8;
 }
 </style>
 </head>
@@ -86,13 +92,13 @@ body{
 BERI PERINGATAN BATASAN PASANG TOGEL 2D
 JIKA KEDAPATAN BETTING LEBIH BATAS
 HANGUSKAN KEMENANGAN
-        <button class="copy-btn" onclick="copyBox(this)">COPY</button>
+<button class="copy-btn" onclick="copyBox(this)">COPY</button>
     </div>
 
     <div class="box" contenteditable="true">
 INVEST 2D, BERI PERINGATAN BATASAN
 TIDAK TERIMA BETTING TOGEL
-        <button class="copy-btn" onclick="copyBox(this)">COPY</button>
+<button class="copy-btn" onclick="copyBox(this)">COPY</button>
     </div>
 
 </div>
@@ -100,27 +106,62 @@ TIDAK TERIMA BETTING TOGEL
 <script>
 function copyBox(btn){
     const text = btn.parentElement.innerText.replace("COPY","");
-    navigator.clipboard.writeText(text);
+    navigator.clipboard.writeText(text.trim());
 
-    alert("✔ Teks dicopy");
+    alert("✔ Teks berhasil dicopy");
+}
+
+function saveNotes(){
+    const notes = [];
+    document.querySelectorAll(".box").forEach(box=>{
+        notes.push(box.innerHTML);
+    });
+
+    localStorage.setItem("roy_notepad", JSON.stringify(notes));
+}
+
+function loadNotes(){
+    const data = JSON.parse(localStorage.getItem("roy_notepad") || "[]");
+
+    if(data.length){
+        const container = document.getElementById("container");
+        container.innerHTML = "";
+
+        data.forEach(item=>{
+            const box = document.createElement("div");
+            box.className = "box";
+            box.contentEditable = true;
+            box.innerHTML = item;
+
+            box.addEventListener("input", saveNotes);
+
+            container.appendChild(box);
+        });
+    }
 }
 
 function addBox(){
-    const container = document.getElementById("container");
-
     const box = document.createElement("div");
     box.className = "box";
     box.contentEditable = true;
 
     box.innerHTML = `
-        Tulis teks di sini...
-        <button class="copy-btn" onclick="copyBox(this)">COPY</button>
-    `;
+Tulis teks di sini...
+<button class="copy-btn" onclick="copyBox(this)">COPY</button>
+`;
 
-    container.appendChild(box);
+    box.addEventListener("input", saveNotes);
+
+    document.getElementById("container").appendChild(box);
+
+    saveNotes();
 }
+
+document.addEventListener("input", saveNotes);
+
+loadNotes();
 </script>
 
 </body>
 </html>
-
+```
